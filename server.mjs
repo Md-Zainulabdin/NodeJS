@@ -1,10 +1,10 @@
 import express from 'express';
 import path from 'path'
 const app = express();
-const port = 3000;
+const port = 5001;
 const __dirname = path.resolve();
 
-console.log(__dirname);
+app.get('/', express.static(path.join(__dirname, "web")))
 app.use('/', express.static(path.join(__dirname, "web")))
 
 app.get('/', (req, res) => {
@@ -12,7 +12,13 @@ app.get('/', (req, res) => {
 })
 
 app.get("/weather", (req, res) => {
-    res.send("Today Weahter is Good..")
+    res.send({
+        city: "karachi",
+        temp_c: 30,
+        humidity: 35,
+        max_temp_c: 40,
+        min_temp_c: 19,
+    })
 })
 
 app.listen(port, () => {

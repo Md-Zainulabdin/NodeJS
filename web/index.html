@@ -6,11 +6,42 @@
     <title>Node Js</title>
 </head>
 <body>
+    <h1>Api Integration</h1>
         <form action="#">
             <div>
-                <label for="#"></label>
                 <input type="text">
+                <button onclick="getWeather(); return false">Integrate</button>
             </div>
         </form>
+        <div id="result">
+
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+        <script>
+
+            let url = window.location.href;
+            let baseUrl = "";
+
+            if (url.split(":")[0] == "http") {
+                baseUrl = `http://localhost:5001`
+            }else {
+                baseUrl = ""
+            }
+            
+
+            let getWeather = () => {
+                axios.get(`${baseUrl}/weather`)
+                .then((res) => {
+                    console.log("response is sucsess");
+                    console.log(res.data);
+
+                    document.querySelector("#result").innerHTML = `
+                    <h1>City: ${res.data?.city}</h1>
+                    <h3>temp: ${res.data?.temp_c}</h3>
+                    <h3>${res.data?.humidity}</h3>
+                    `;
+                } )
+            }
+        </script>
 </body>
 </html>
